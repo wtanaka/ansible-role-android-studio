@@ -1,0 +1,4 @@
+---
+install_dir: "/opt/android-studio"
+linux_url: "https://dl.google.com/dl/android/studio/ide-zips/2.2.0.12/android-studio-ide-145.3276617-linux.zip"
+local_package_location: "/tmp/android_studio_download.zip"

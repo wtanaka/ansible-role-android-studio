@@ -1,0 +1,43 @@
+---
+- include: compat.yml
+
+- include: Debian.yml
+  when: ansible_os_family == 'Debian'
+
+- include: RedHat.yml
+  when: ansible_os_family == 'RedHat'
+
+- include_vars: "{{item}}"
+  with_first_found:
+  - "../vars/{{ansible_distribution}}-{{ansible_distribution_major_version | int}}.yml"
+  - "../vars/{{ansible_distribution}}.yml"
+  - "../vars/{{ansible_os_family}}.yml"
+  - "../vars/default.yml"
+
+- name: Check if android studio is installed
+  stat: path={{install_dir}}
+  register: install
+
+- name: Download Android Studio .zip
+  command: wget -q -O {{local_package_location}} {{linux_url}}
+  args:
+    creates: "{{local_package_location}}"
+  when: install.stat.isdir is not defined or not install.stat.isdir
+
+- name: install unzip with default package manager
+  action: "{{backcompat_pkg_mgr}} name={{package_name}}"
+  sudo: yes
+  when: backcompat_pkg_mgr == "yum" or backcompat_pkg_mgr == "apt"
+
+# Use command since dnf was only added as a module in ansible 1.9.0
+- name: install unzip with dnf
+  command: dnf install -y {{package_name}}
+  args:
+    creates: /usr/bin/unzip
+  sudo: yes
+  when: backcompat_pkg_mgr == "dnf"
+
+- name: Uncompress Android Studio
+  command: unzip -od /opt {{local_package_location}}
+  sudo: True
+  when: install.stat.isdir is not defined or not install.stat.isdir
