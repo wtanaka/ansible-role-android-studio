@@ -1,2 +1,2 @@
 ---
-# vars files for android-studio
+workaround_ansible_issue_7843: yes
