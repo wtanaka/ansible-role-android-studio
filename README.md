@@ -13,6 +13,14 @@ Example Playbook
       roles:
          - wtanaka.android-studio
 
+Install a specific version
+
+    - hosts: servers
+      roles:
+         - role: wtanaka.android-studio
+           android_studio_version: "2.2.3.0"
+           android_studio_build "145.3537739"
+
 License
 -------
 
