@@ -32,14 +32,14 @@
   command: wget -q -O {{local_package_location}} {{linux_url}}
   args:
     creates: "{{local_package_location}}"
-  when: install|failed
+  when: install.stdout.find(android_studio_build) == -1
 
 - name: Uncompress Android Studio
   command: rm -rf {{install_dir}}
   sudo: True
-  when: install|failed
+  when: install.stdout.find(android_studio_build) == -1
 
 - name: Uncompress Android Studio
   command: unzip -od /opt {{local_package_location}}
   sudo: True
-  when: install|failed
+  when: install.stdout.find(android_studio_build) == -1
