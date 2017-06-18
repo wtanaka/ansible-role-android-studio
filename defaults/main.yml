@@ -1,6 +1,6 @@
 ---
 install_dir: "/opt/android-studio"
-android_studio_version: "2.3.2.0"
-android_studio_build: "162.3934792"
+android_studio_version: "2.3.3.0"
+android_studio_build: "162.4069837"
 linux_url: "https://dl.google.com/dl/android/studio/ide-zips/{{android_studio_version}}/android-studio-ide-{{android_studio_build}}-linux.zip"
 local_package_location: "/tmp/android_studio_download-{{android_studio_build}}.zip"
